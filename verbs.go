@@ -69,3 +69,44 @@ func NewPlay(noun string, attrs *PlayAttrs) *Play {
 		attrs: attrs,
 	}
 }
+
+type RecordAttrs struct {
+	Action      string
+	Method      string
+	FinishOnKey string
+	MaxLength   int
+}
+
+type Record struct {
+	attrs *RecordAttrs
+}
+
+func (v *Record) String() string {
+	attr_buffer := bytes.NewBuffer([]byte{})
+
+	if v.attrs != nil {
+		if len(v.attrs.Action) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" action=\"%s\"", v.attrs.Action))
+		}
+
+		if len(v.attrs.Method) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" method=\"%s\"", v.attrs.Method))
+		}
+
+		if len(v.attrs.FinishOnKey) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" finishOnKey=\"%s\"", v.attrs.FinishOnKey))
+		}
+
+		if v.attrs.MaxLength > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" maxLength=\"%d\"", v.attrs.MaxLength))
+		}
+	}
+
+	return fmt.Sprintf("<Record%s />", attr_buffer.String())
+}
+
+func NewRecord(attrs *RecordAttrs) *Record {
+	return &Record{
+		attrs: attrs,
+	}
+}
