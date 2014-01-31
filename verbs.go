@@ -41,3 +41,31 @@ func NewSay(noun string, attrs *SayAttrs) *Say {
 		attrs: attrs,
 	}
 }
+
+type PlayAttrs struct {
+	Loop int
+}
+
+type Play struct {
+	noun  string
+	attrs *PlayAttrs
+}
+
+func (v *Play) String() string {
+	attr_buffer := bytes.NewBuffer([]byte{})
+
+	if v.attrs != nil {
+		if v.attrs.Loop >= 1 {
+			attr_buffer.WriteString(fmt.Sprintf(" loop=\"%d\"", v.attrs.Loop))
+		}
+	}
+
+	return fmt.Sprintf("<Play%s>%s</Play>", attr_buffer.String(), v.noun)
+}
+
+func NewPlay(noun string, attrs *PlayAttrs) *Play {
+	return &Play{
+		noun:  noun,
+		attrs: attrs,
+	}
+}

@@ -39,3 +39,24 @@ func TestSay(t *testing.T) {
 		t.Errorf("Say string returned an unexpected value : %s", say_string)
 	}
 }
+
+func TestPlay(t *testing.T) {
+	var (
+		play        *Play
+		play_string string
+	)
+
+	play = NewPlay("http://www.example.com/audio.mp3", nil)
+
+	if play_string = play.String(); play_string != "<Play>http://www.example.com/audio.mp3</Play>" {
+		t.Errorf("Play string returned an unexpected value : %s", play_string)
+	}
+
+	play = NewPlay("http://www.example.com/audio.mp3", &PlayAttrs{
+		Loop: 1,
+	})
+
+	if play_string = play.String(); play_string != "<Play loop=\"1\">http://www.example.com/audio.mp3</Play>" {
+		t.Errorf("Play string returned an unexpected value : %s", play_string)
+	}
+}
