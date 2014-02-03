@@ -16,6 +16,10 @@ func (r *Response) Play(noun string, attrs *PlayAttrs) {
 	r.verbs = append(r.verbs, NewPlay(noun, attrs))
 }
 
+func (r *Response) Record(attrs *RecordAttrs) {
+	r.verbs = append(r.verbs, NewRecord(attrs))
+}
+
 func (r *Response) Reset() {
 	r.verbs = nil
 }
