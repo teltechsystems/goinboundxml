@@ -9,6 +9,16 @@ type Verb interface {
 	fmt.Stringer
 }
 
+type Hangup struct{}
+
+func (v *Hangup) String() string {
+	return "<Hangup />"
+}
+
+func NewHangup() *Hangup {
+	return &Hangup{}
+}
+
 type SayAttrs struct {
 	Loop  int
 	Voice string

@@ -2,6 +2,19 @@ package inboundxml
 
 import "testing"
 
+func TestHangup(t *testing.T) {
+	var (
+		hangup        *Hangup
+		hangup_string string
+	)
+
+	hangup = NewHangup()
+
+	if hangup_string = hangup.String(); hangup_string != "<Hangup />" {
+		t.Errorf("Hangup string returned an unexpected value : %s", hangup_string)
+	}
+}
+
 func TestSay(t *testing.T) {
 	var (
 		say        *Say
