@@ -82,9 +82,11 @@ func NewPlay(noun string, attrs *PlayAttrs) *Play {
 
 type RecordAttrs struct {
 	Action      string
-	Method      string
+	Direction   string
 	FinishOnKey string
 	MaxLength   int
+	Method      string
+	PlayBeep    bool
 }
 
 type Record struct {
@@ -110,6 +112,12 @@ func (v *Record) String() string {
 		if v.attrs.MaxLength > 0 {
 			attr_buffer.WriteString(fmt.Sprintf(" maxLength=\"%d\"", v.attrs.MaxLength))
 		}
+
+		if len(v.attrs.Direction) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" direction=\"%s\"", v.attrs.Direction))
+		}
+
+		attr_buffer.WriteString(fmt.Sprintf(" playBeep=\"%t\"", v.attrs.PlayBeep))
 	}
 
 	return fmt.Sprintf("<Record%s />", attr_buffer.String())

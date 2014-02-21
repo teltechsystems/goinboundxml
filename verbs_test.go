@@ -90,7 +90,7 @@ func TestRecord(t *testing.T) {
 		Action: "http://www.example.com/recording-callback",
 	})
 
-	if record_string = record.String(); record_string != "<Record action=\"http://www.example.com/recording-callback\" />" {
+	if record_string = record.String(); record_string != "<Record action=\"http://www.example.com/recording-callback\" playBeep=\"false\" />" {
 		t.Errorf("Record string returned an unexpected value : %s", record_string)
 	}
 
@@ -99,7 +99,7 @@ func TestRecord(t *testing.T) {
 		Method: "POST",
 	})
 
-	if record_string = record.String(); record_string != "<Record action=\"http://www.example.com/recording-callback\" method=\"POST\" />" {
+	if record_string = record.String(); record_string != "<Record action=\"http://www.example.com/recording-callback\" method=\"POST\" playBeep=\"false\" />" {
 		t.Errorf("Record string returned an unexpected value : %s", record_string)
 	}
 
@@ -109,7 +109,7 @@ func TestRecord(t *testing.T) {
 		FinishOnKey: "#",
 	})
 
-	if record_string = record.String(); record_string != "<Record action=\"http://www.example.com/recording-callback\" method=\"POST\" finishOnKey=\"#\" />" {
+	if record_string = record.String(); record_string != "<Record action=\"http://www.example.com/recording-callback\" method=\"POST\" finishOnKey=\"#\" playBeep=\"false\" />" {
 		t.Errorf("Record string returned an unexpected value : %s", record_string)
 	}
 
@@ -119,7 +119,17 @@ func TestRecord(t *testing.T) {
 		MaxLength: 60,
 	})
 
-	if record_string = record.String(); record_string != "<Record action=\"http://www.example.com/recording-callback\" method=\"POST\" maxLength=\"60\" />" {
+	if record_string = record.String(); record_string != "<Record action=\"http://www.example.com/recording-callback\" method=\"POST\" maxLength=\"60\" playBeep=\"false\" />" {
+		t.Errorf("Record string returned an unexpected value : %s", record_string)
+	}
+
+	record = NewRecord(&RecordAttrs{
+		Action:    "http://www.example.com/recording-callback",
+		Direction: "in",
+		PlayBeep:  true,
+	})
+
+	if record_string = record.String(); record_string != "<Record action=\"http://www.example.com/recording-callback\" direction=\"in\" playBeep=\"true\" />" {
 		t.Errorf("Record string returned an unexpected value : %s", record_string)
 	}
 }
