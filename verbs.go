@@ -82,6 +82,7 @@ func NewPlay(noun string, attrs *PlayAttrs) *Play {
 
 type RecordAttrs struct {
 	Action      string
+	Background  bool
 	Direction   string
 	FinishOnKey string
 	MaxLength   int
@@ -118,6 +119,7 @@ func (v *Record) String() string {
 		}
 
 		attr_buffer.WriteString(fmt.Sprintf(" playBeep=\"%t\"", v.attrs.PlayBeep))
+		attr_buffer.WriteString(fmt.Sprintf(" background=\"%t\"", v.attrs.Background))
 	}
 
 	return fmt.Sprintf("<Record%s />", attr_buffer.String())
