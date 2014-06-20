@@ -30,7 +30,7 @@ type DialAttrs struct {
 	DialMusic       string
 	CallbackUrl     string
 	CallbackMethod  string
-	ConfirmSound    bool
+	ConfirmSound    string
 	DigitsMatch     string
 	StraightToVm    bool
 	HeartbeatUrl    string
@@ -77,6 +77,10 @@ func (d *Dial) String() string {
 			attr_buffer.WriteString(fmt.Sprintf(" callbackMethod=\"%s\"", d.attrs.CallbackMethod))
 		}
 
+		if len(d.attrs.ConfirmSound) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" confirmSound=\"%s\"", d.attrs.ConfirmSound))
+		}
+
 		if len(d.attrs.DigitsMatch) > 0 {
 			attr_buffer.WriteString(fmt.Sprintf(" digitsMatch=\"%s\"", d.attrs.DigitsMatch))
 		}
@@ -106,7 +110,6 @@ func (d *Dial) String() string {
 		}
 
 		attr_buffer.WriteString(fmt.Sprintf(" hideCallerId=\"%t\"", d.attrs.HideCallerId))
-		attr_buffer.WriteString(fmt.Sprintf(" confirmSound=\"%t\"", d.attrs.ConfirmSound))
 		attr_buffer.WriteString(fmt.Sprintf(" straightToVm=\"%t\"", d.attrs.StraightToVm))
 	}
 

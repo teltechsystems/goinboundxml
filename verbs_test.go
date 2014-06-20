@@ -15,92 +15,98 @@ func TestDial(t *testing.T) {
 	Convey("A dial verb with an action attr", t, func() {
 		dial := NewDial(NewNumber("+15038884341", nil), &DialAttrs{Action: "/testing"})
 
-		So(dial.String(), ShouldEqual, "<Dial action=\"/testing\" hideCallerId=\"false\" confirmSound=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
+		So(dial.String(), ShouldEqual, "<Dial action=\"/testing\" hideCallerId=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
 	})
 
 	Convey("A dial verb with a method attr", t, func() {
 		dial := NewDial(NewNumber("+15038884341", nil), &DialAttrs{Method: "POST"})
 
-		So(dial.String(), ShouldEqual, "<Dial method=\"POST\" hideCallerId=\"false\" confirmSound=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
+		So(dial.String(), ShouldEqual, "<Dial method=\"POST\" hideCallerId=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
 	})
 
 	Convey("A dial verb with a timeout attr", t, func() {
 		dial := NewDial(NewNumber("+15038884341", nil), &DialAttrs{Timeout: 30})
 
-		So(dial.String(), ShouldEqual, "<Dial timeout=\"30\" hideCallerId=\"false\" confirmSound=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
+		So(dial.String(), ShouldEqual, "<Dial timeout=\"30\" hideCallerId=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
 	})
 
 	Convey("A dial verb with a timeLimit attr", t, func() {
 		dial := NewDial(NewNumber("+15038884341", nil), &DialAttrs{TimeLimit: 60})
 
-		So(dial.String(), ShouldEqual, "<Dial timeLimit=\"60\" hideCallerId=\"false\" confirmSound=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
+		So(dial.String(), ShouldEqual, "<Dial timeLimit=\"60\" hideCallerId=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
 	})
 
 	Convey("A dial verb with a callerId attr", t, func() {
 		dial := NewDial(NewNumber("+15038884341", nil), &DialAttrs{CallerId: "+15558675309"})
 
-		So(dial.String(), ShouldEqual, "<Dial callerId=\"+15558675309\" hideCallerId=\"false\" confirmSound=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
+		So(dial.String(), ShouldEqual, "<Dial callerId=\"+15558675309\" hideCallerId=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
 	})
 
 	Convey("A dial verb with a dialMusic attr", t, func() {
 		dial := NewDial(NewNumber("+15038884341", nil), &DialAttrs{DialMusic: "MUSIC.MP3"})
 
-		So(dial.String(), ShouldEqual, "<Dial dialMusic=\"MUSIC.MP3\" hideCallerId=\"false\" confirmSound=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
+		So(dial.String(), ShouldEqual, "<Dial dialMusic=\"MUSIC.MP3\" hideCallerId=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
 	})
 
 	Convey("A dial verb with a callbackUrl attr", t, func() {
 		dial := NewDial(NewNumber("+15038884341", nil), &DialAttrs{CallbackUrl: "/callbackUrl"})
 
-		So(dial.String(), ShouldEqual, "<Dial callbackUrl=\"/callbackUrl\" hideCallerId=\"false\" confirmSound=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
+		So(dial.String(), ShouldEqual, "<Dial callbackUrl=\"/callbackUrl\" hideCallerId=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
 	})
 
 	Convey("A dial verb with a callbackMethod attr", t, func() {
 		dial := NewDial(NewNumber("+15038884341", nil), &DialAttrs{CallbackMethod: "POST"})
 
-		So(dial.String(), ShouldEqual, "<Dial callbackMethod=\"POST\" hideCallerId=\"false\" confirmSound=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
+		So(dial.String(), ShouldEqual, "<Dial callbackMethod=\"POST\" hideCallerId=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
+	})
+
+	Convey("A dial verb with a confirmSound attr", t, func() {
+		dial := NewDial(NewNumber("+15038884341", nil), &DialAttrs{ConfirmSound: "/confirmSound"})
+
+		So(dial.String(), ShouldEqual, "<Dial confirmSound=\"/confirmSound\" hideCallerId=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
 	})
 
 	// HERE HERE HERE
 	Convey("A dial verb with a digitsMatch attr", t, func() {
 		dial := NewDial(NewNumber("+15038884341", nil), &DialAttrs{DigitsMatch: "123"})
 
-		So(dial.String(), ShouldEqual, "<Dial digitsMatch=\"123\" hideCallerId=\"false\" confirmSound=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
+		So(dial.String(), ShouldEqual, "<Dial digitsMatch=\"123\" hideCallerId=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
 	})
 
 	Convey("A dial verb with a heartbeatUrl attr", t, func() {
 		dial := NewDial(NewNumber("+15038884341", nil), &DialAttrs{HeartbeatUrl: "/heartbeatUrl"})
 
-		So(dial.String(), ShouldEqual, "<Dial heartbeatUrl=\"/heartbeatUrl\" hideCallerId=\"false\" confirmSound=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
+		So(dial.String(), ShouldEqual, "<Dial heartbeatUrl=\"/heartbeatUrl\" hideCallerId=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
 	})
 
 	Convey("A dial verb with a heartbeatMethod attr", t, func() {
 		dial := NewDial(NewNumber("+15038884341", nil), &DialAttrs{HeartbeatMethod: "POST"})
 
-		So(dial.String(), ShouldEqual, "<Dial heartbeatMethod=\"POST\" hideCallerId=\"false\" confirmSound=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
+		So(dial.String(), ShouldEqual, "<Dial heartbeatMethod=\"POST\" hideCallerId=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
 	})
 
 	Convey("A dial verb with a forwardedFrom attr", t, func() {
 		dial := NewDial(NewNumber("+15038884341", nil), &DialAttrs{ForwardedFrom: "+15038884341"})
 
-		So(dial.String(), ShouldEqual, "<Dial forwardedFrom=\"+15038884341\" hideCallerId=\"false\" confirmSound=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
+		So(dial.String(), ShouldEqual, "<Dial forwardedFrom=\"+15038884341\" hideCallerId=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
 	})
 
 	Convey("A dial verb with a ifMachine attr", t, func() {
 		dial := NewDial(NewNumber("+15038884341", nil), &DialAttrs{IfMachine: "continue"})
 
-		So(dial.String(), ShouldEqual, "<Dial ifMachine=\"continue\" hideCallerId=\"false\" confirmSound=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
+		So(dial.String(), ShouldEqual, "<Dial ifMachine=\"continue\" hideCallerId=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
 	})
 
 	Convey("A dial verb with a ifMachineUrl attr", t, func() {
 		dial := NewDial(NewNumber("+15038884341", nil), &DialAttrs{IfMachineUrl: "/ifMachineUrl"})
 
-		So(dial.String(), ShouldEqual, "<Dial ifMachineUrl=\"/ifMachineUrl\" hideCallerId=\"false\" confirmSound=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
+		So(dial.String(), ShouldEqual, "<Dial ifMachineUrl=\"/ifMachineUrl\" hideCallerId=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
 	})
 
 	Convey("A dial verb with a ifMachineMethod attr", t, func() {
 		dial := NewDial(NewNumber("+15038884341", nil), &DialAttrs{IfMachineMethod: "POST"})
 
-		So(dial.String(), ShouldEqual, "<Dial ifMachineMethod=\"POST\" hideCallerId=\"false\" confirmSound=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
+		So(dial.String(), ShouldEqual, "<Dial ifMachineMethod=\"POST\" hideCallerId=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
 	})
 }
 
