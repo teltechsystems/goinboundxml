@@ -8,6 +8,10 @@ type Response struct {
 	verbs []Verb
 }
 
+func (r *Response) Dial(addresser dialAddresser, attrs *DialAttrs) {
+	r.verbs = append(r.verbs, NewDial(addresser, attrs))
+}
+
 func (r *Response) Hangup() {
 	r.verbs = append(r.verbs, NewHangup())
 }

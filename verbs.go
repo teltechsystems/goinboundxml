@@ -9,6 +9,141 @@ type Verb interface {
 	fmt.Stringer
 }
 
+type dialAddresser interface {
+	Verb
+	addresser()
+}
+
+// DIAL VERB
+type Dial struct {
+	addresser dialAddresser
+	attrs     *DialAttrs
+}
+
+type DialAttrs struct {
+	Action          string
+	Method          string
+	Timeout         int
+	TimeLimit       int
+	CallerId        string
+	HideCallerId    bool
+	DialMusic       string
+	CallbackUrl     string
+	CallbackMethod  string
+	ConfirmSound    bool
+	DigitsMatch     string
+	StraightToVm    bool
+	HeartbeatUrl    string
+	HeartbeatMethod string
+	ForwardedFrom   string
+	IfMachine       string `continue,redirect,hangup`
+	IfMachineUrl    string
+	IfMachineMethod string
+}
+
+func (d *Dial) String() string {
+	attr_buffer := bytes.NewBuffer([]byte{})
+
+	if d.attrs != nil {
+		if len(d.attrs.Action) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" action=\"%s\"", d.attrs.Action))
+		}
+
+		if len(d.attrs.Method) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" method=\"%s\"", d.attrs.Method))
+		}
+
+		if d.attrs.Timeout > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" timeout=\"%d\"", d.attrs.Timeout))
+		}
+
+		if d.attrs.TimeLimit > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" timeLimit=\"%d\"", d.attrs.TimeLimit))
+		}
+
+		if len(d.attrs.CallerId) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" callerId=\"%s\"", d.attrs.CallerId))
+		}
+
+		if len(d.attrs.DialMusic) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" dialMusic=\"%s\"", d.attrs.DialMusic))
+		}
+
+		if len(d.attrs.CallbackUrl) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" callbackUrl=\"%s\"", d.attrs.CallbackUrl))
+		}
+
+		if len(d.attrs.CallbackMethod) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" callbackMethod=\"%s\"", d.attrs.CallbackMethod))
+		}
+
+		if len(d.attrs.DigitsMatch) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" digitsMatch=\"%s\"", d.attrs.DigitsMatch))
+		}
+
+		if len(d.attrs.HeartbeatUrl) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" heartbeatUrl=\"%s\"", d.attrs.HeartbeatUrl))
+		}
+
+		if len(d.attrs.HeartbeatMethod) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" heartbeatMethod=\"%s\"", d.attrs.HeartbeatMethod))
+		}
+
+		if len(d.attrs.ForwardedFrom) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" forwardedFrom=\"%s\"", d.attrs.ForwardedFrom))
+		}
+
+		if len(d.attrs.IfMachine) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" ifMachine=\"%s\"", d.attrs.IfMachine))
+		}
+
+		if len(d.attrs.IfMachineUrl) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" ifMachineUrl=\"%s\"", d.attrs.IfMachineUrl))
+		}
+
+		if len(d.attrs.IfMachineMethod) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" ifMachineMethod=\"%s\"", d.attrs.IfMachineMethod))
+		}
+
+		attr_buffer.WriteString(fmt.Sprintf(" hideCallerId=\"%t\"", d.attrs.HideCallerId))
+		attr_buffer.WriteString(fmt.Sprintf(" confirmSound=\"%t\"", d.attrs.ConfirmSound))
+		attr_buffer.WriteString(fmt.Sprintf(" straightToVm=\"%t\"", d.attrs.StraightToVm))
+	}
+
+	return "<Dial" + attr_buffer.String() + ">" + d.addresser.String() + "</Dial>"
+}
+
+func NewDial(addresser dialAddresser, attrs *DialAttrs) *Dial {
+	return &Dial{
+		addresser: addresser,
+		attrs:     attrs,
+	}
+}
+
+// NUMBER VERB
+type Number struct {
+	noun  string
+	attrs *NumberAttrs
+}
+
+type NumberAttrs struct {
+	SendDigits string
+}
+
+func (n *Number) addresser() {}
+
+func (n *Number) String() string {
+	return "<Number>" + n.noun + "</Number>"
+}
+
+func NewNumber(noun string, attrs *NumberAttrs) *Number {
+	return &Number{
+		noun:  noun,
+		attrs: attrs,
+	}
+}
+
+// HANGUP VERB
 type Hangup struct{}
 
 func (v *Hangup) String() string {
@@ -19,14 +154,15 @@ func NewHangup() *Hangup {
 	return &Hangup{}
 }
 
-type SayAttrs struct {
-	Loop  int
-	Voice string
-}
-
+// SAY VERB
 type Say struct {
 	noun  string
 	attrs *SayAttrs
+}
+
+type SayAttrs struct {
+	Loop  int
+	Voice string
 }
 
 func (v *Say) String() string {
@@ -52,13 +188,14 @@ func NewSay(noun string, attrs *SayAttrs) *Say {
 	}
 }
 
-type PlayAttrs struct {
-	Loop int
-}
-
+// PLAY VERB
 type Play struct {
 	noun  string
 	attrs *PlayAttrs
+}
+
+type PlayAttrs struct {
+	Loop int
 }
 
 func (v *Play) String() string {
@@ -80,6 +217,11 @@ func NewPlay(noun string, attrs *PlayAttrs) *Play {
 	}
 }
 
+// RECORD VERB
+type Record struct {
+	attrs *RecordAttrs
+}
+
 type RecordAttrs struct {
 	Action      string
 	Background  bool
@@ -88,10 +230,6 @@ type RecordAttrs struct {
 	MaxLength   int
 	Method      string
 	PlayBeep    bool
-}
-
-type Record struct {
-	attrs *RecordAttrs
 }
 
 func (v *Record) String() string {
