@@ -16,6 +16,10 @@ func (r *Response) Hangup() {
 	r.verbs = append(r.verbs, NewHangup())
 }
 
+func (r *Response) Reject() {
+	r.verbs = append(r.verbs, NewReject())
+}
+
 func (r *Response) Play(noun string, attrs *PlayAttrs) {
 	r.verbs = append(r.verbs, NewPlay(noun, attrs))
 }

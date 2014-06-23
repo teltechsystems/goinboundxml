@@ -157,6 +157,17 @@ func NewHangup() *Hangup {
 	return &Hangup{}
 }
 
+// REJECT VERB
+type Reject struct{}
+
+func (v *Reject) String() string {
+	return "<Reject />"
+}
+
+func NewReject() *Reject {
+	return &Reject{}
+}
+
 // SAY VERB
 type Say struct {
 	noun  string
