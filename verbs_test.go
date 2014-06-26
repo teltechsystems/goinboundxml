@@ -110,15 +110,38 @@ func TestDial(t *testing.T) {
 	})
 }
 
+func TestNumber(t *testing.T) {
+	number := NewNumber("+15558884341", nil)
+
+	if number_string := number.String(); number_string != "<Number>+15558884341</Number>" {
+		t.Errorf("Number string returned an unexpected value : %s", number_string)
+	}
+
+	number = NewNumber("+15558884341", &NumberAttrs{SendDigits: "1234"})
+
+	if number_string := number.String(); number_string != "<Number sendDigits=\"1234\">+15558884341</Number>" {
+		t.Errorf("Number string returned an unexpected value : %s", number_string)
+	}
+}
+
+func TestRedirect(t *testing.T) {
+	number := NewRedirect("http://www.google.com/", nil)
+
+	if number_string := number.String(); number_string != "<Redirect>http://www.google.com/</Redirect>" {
+		t.Errorf("Redirect string returned an unexpected value : %s", number_string)
+	}
+
+	number = NewRedirect("http://www.google.com/", &RedirectAttrs{Method: "POST"})
+
+	if number_string := number.String(); number_string != "<Redirect method=\"POST\">http://www.google.com/</Redirect>" {
+		t.Errorf("Redirect string returned an unexpected value : %s", number_string)
+	}
+}
+
 func TestHangup(t *testing.T) {
-	var (
-		hangup        *Hangup
-		hangup_string string
-	)
+	hangup := NewHangup()
 
-	hangup = NewHangup()
-
-	if hangup_string = hangup.String(); hangup_string != "<Hangup />" {
+	if hangup_string := hangup.String(); hangup_string != "<Hangup />" {
 		t.Errorf("Hangup string returned an unexpected value : %s", hangup_string)
 	}
 }

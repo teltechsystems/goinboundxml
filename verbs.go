@@ -136,7 +136,15 @@ type NumberAttrs struct {
 func (n *Number) addresser() {}
 
 func (n *Number) String() string {
-	return "<Number>" + n.noun + "</Number>"
+	attr_buffer := bytes.NewBuffer([]byte{})
+
+	if n.attrs != nil {
+		if len(n.attrs.SendDigits) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" sendDigits=\"%s\"", n.attrs.SendDigits))
+		}
+	}
+
+	return "<Number" + attr_buffer.String() + ">" + n.noun + "</Number>"
 }
 
 func NewNumber(noun string, attrs *NumberAttrs) *Number {
@@ -279,6 +287,37 @@ func (v *Record) String() string {
 
 func NewRecord(attrs *RecordAttrs) *Record {
 	return &Record{
+		attrs: attrs,
+	}
+}
+
+// REDIRECT VERB
+type Redirect struct {
+	noun  string
+	attrs *RedirectAttrs
+}
+
+type RedirectAttrs struct {
+	Method string
+}
+
+func (r *Redirect) addresser() {}
+
+func (r *Redirect) String() string {
+	attr_buffer := bytes.NewBuffer([]byte{})
+
+	if r.attrs != nil {
+		if len(r.attrs.Method) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" method=\"%s\"", r.attrs.Method))
+		}
+	}
+
+	return "<Redirect" + attr_buffer.String() + ">" + r.noun + "</Redirect>"
+}
+
+func NewRedirect(noun string, attrs *RedirectAttrs) *Redirect {
+	return &Redirect{
+		noun:  noun,
 		attrs: attrs,
 	}
 }
