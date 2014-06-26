@@ -16,16 +16,20 @@ func (r *Response) Hangup() {
 	r.verbs = append(r.verbs, NewHangup())
 }
 
-func (r *Response) Reject() {
-	r.verbs = append(r.verbs, NewReject())
-}
-
 func (r *Response) Play(noun string, attrs *PlayAttrs) {
 	r.verbs = append(r.verbs, NewPlay(noun, attrs))
 }
 
 func (r *Response) Record(attrs *RecordAttrs) {
 	r.verbs = append(r.verbs, NewRecord(attrs))
+}
+
+func (r *Response) Redirect(noun string, attrs *RedirectAttrs) {
+	r.verbs = append(r.verbs, NewRedirect(noun, attrs))
+}
+
+func (r *Response) Reject() {
+	r.verbs = append(r.verbs, NewReject())
 }
 
 func (r *Response) Reset() {
