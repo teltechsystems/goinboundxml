@@ -156,6 +156,44 @@ func TestRedirect(t *testing.T) {
 	}
 }
 
+func TestGather(t *testing.T) {
+	Convey("A gather verb with no attrs", t, func() {
+		gather := NewGather(nil, nil)
+
+		So(gather.String(), ShouldEqual, "<Gather></Gather>")
+	})
+
+	Convey("A gather verb with an action attr", t, func() {
+		gather := NewGather(NewSay("test", nil), &GatherAttrs{Action: "/testing"})
+
+		So(gather.String(), ShouldEqual, "<Gather action=\"/testing\"><Say>test</Say></Gather>")
+	})
+
+	Convey("A gather verb with a method attr", t, func() {
+		gather := NewGather(NewSay("test", nil), &GatherAttrs{Method: "POST"})
+
+		So(gather.String(), ShouldEqual, "<Gather method=\"POST\"><Say>test</Say></Gather>")
+	})
+
+	Convey("A dial verb with a timeout attr", t, func() {
+		gather := NewGather(NewSay("test", nil), &GatherAttrs{Timeout: 30})
+
+		So(gather.String(), ShouldEqual, "<Gather timeout=\"30\"><Say>test</Say></Gather>")
+	})
+
+	Convey("A dial verb with a finishOnKey attr", t, func() {
+		gather := NewGather(NewSay("test", nil), &GatherAttrs{FinishOnKey: "#"})
+
+		So(gather.String(), ShouldEqual, "<Gather finishOnKey=\"#\"><Say>test</Say></Gather>")
+	})
+
+	Convey("A dial verb with a numDigits attr", t, func() {
+		gather := NewGather(NewSay("test", nil), &GatherAttrs{NumDigits: 3})
+
+		So(gather.String(), ShouldEqual, "<Gather numDigits=\"3\"><Say>test</Say></Gather>")
+	})
+}
+
 func TestHangup(t *testing.T) {
 	hangup := NewHangup()
 

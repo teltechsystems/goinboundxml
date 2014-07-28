@@ -26,22 +26,23 @@ type DialAttrs struct {
 	Record            bool
 	RecordCallbackUrl string
 	RecordLifetime    int
-	Timeout           int
-	TimeLimit         int
-	CallerId          string
-	HideCallerId      bool
-	DialMusic         string
-	CallbackUrl       string
-	CallbackMethod    string
-	ConfirmSound      string
-	DigitsMatch       string
-	StraightToVm      bool
-	HeartbeatUrl      string
-	HeartbeatMethod   string
-	ForwardedFrom     string
-	IfMachine         string `continue,redirect,hangup`
-	IfMachineUrl      string
-	IfMachineMethod   string
+	// Direction         bool
+	Timeout         int
+	TimeLimit       int
+	CallerId        string
+	HideCallerId    bool
+	DialMusic       string
+	CallbackUrl     string
+	CallbackMethod  string
+	ConfirmSound    string
+	DigitsMatch     string
+	StraightToVm    bool
+	HeartbeatUrl    string
+	HeartbeatMethod string
+	ForwardedFrom   string
+	IfMachine       string `continue,redirect,hangup`
+	IfMachineUrl    string
+	IfMachineMethod string
 }
 
 func (d *Dial) String() string {
@@ -123,6 +124,7 @@ func (d *Dial) String() string {
 		attr_buffer.WriteString(fmt.Sprintf(" record=\"%t\"", d.attrs.Record))
 		attr_buffer.WriteString(fmt.Sprintf(" hideCallerId=\"%t\"", d.attrs.HideCallerId))
 		attr_buffer.WriteString(fmt.Sprintf(" straightToVm=\"%t\"", d.attrs.StraightToVm))
+		// attr_buffer.WriteString(fmt.Sprintf(" direction=\"%t\"", d.attrs.Direction))
 	}
 
 	return "<Dial" + attr_buffer.String() + ">" + d.addresser.String() + "</Dial>"
@@ -163,6 +165,59 @@ func NewNumber(noun string, attrs *NumberAttrs) *Number {
 	return &Number{
 		noun:  noun,
 		attrs: attrs,
+	}
+}
+
+// DIAL VERB
+type Gather struct {
+	InnerVerb Verb
+	attrs     *GatherAttrs
+}
+
+type GatherAttrs struct {
+	Action      string
+	Method      string
+	Timeout     int
+	FinishOnKey string
+	NumDigits   int
+}
+
+func (g *Gather) String() string {
+	attr_buffer := bytes.NewBuffer([]byte{})
+
+	if g.attrs != nil {
+		if len(g.attrs.Action) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" action=\"%s\"", g.attrs.Action))
+		}
+
+		if len(g.attrs.Method) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" method=\"%s\"", g.attrs.Method))
+		}
+
+		if g.attrs.Timeout > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" timeout=\"%d\"", g.attrs.Timeout))
+		}
+
+		if len(g.attrs.FinishOnKey) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" finishOnKey=\"%s\"", g.attrs.FinishOnKey))
+		}
+
+		if g.attrs.NumDigits > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" numDigits=\"%d\"", g.attrs.NumDigits))
+		}
+	}
+
+	if g.InnerVerb == nil {
+		return "<Gather" + attr_buffer.String() + "></Gather>"
+	} else {
+		return "<Gather" + attr_buffer.String() + ">" + g.InnerVerb.String() + "</Gather>"
+	}
+}
+
+func NewGather(innerVerb Verb, attrs *GatherAttrs) *Gather {
+	return &Gather{
+		InnerVerb: innerVerb,
+		attrs:     attrs,
 	}
 }
 
