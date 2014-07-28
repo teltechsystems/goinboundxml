@@ -12,6 +12,10 @@ func (r *Response) Dial(addresser dialAddresser, attrs *DialAttrs) {
 	r.verbs = append(r.verbs, NewDial(addresser, attrs))
 }
 
+func (r *Response) Gather(innerVerb Verb, attrs *GatherAttrs) {
+	r.verbs = append(r.verbs, NewGather(innerVerb, attrs))
+}
+
 func (r *Response) Hangup() {
 	r.verbs = append(r.verbs, NewHangup())
 }
