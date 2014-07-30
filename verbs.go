@@ -26,23 +26,23 @@ type DialAttrs struct {
 	Record            bool
 	RecordCallbackUrl string
 	RecordLifetime    int
-	// Direction         bool
-	Timeout         int
-	TimeLimit       int
-	CallerId        string
-	HideCallerId    bool
-	DialMusic       string
-	CallbackUrl     string
-	CallbackMethod  string
-	ConfirmSound    string
-	DigitsMatch     string
-	StraightToVm    bool
-	HeartbeatUrl    string
-	HeartbeatMethod string
-	ForwardedFrom   string
-	IfMachine       string `continue,redirect,hangup`
-	IfMachineUrl    string
-	IfMachineMethod string
+	RecordDirection   string
+	Timeout           int
+	TimeLimit         int
+	CallerId          string
+	HideCallerId      bool
+	DialMusic         string
+	CallbackUrl       string
+	CallbackMethod    string
+	ConfirmSound      string
+	DigitsMatch       string
+	StraightToVm      bool
+	HeartbeatUrl      string
+	HeartbeatMethod   string
+	ForwardedFrom     string
+	IfMachine         string `continue,redirect,hangup`
+	IfMachineUrl      string
+	IfMachineMethod   string
 }
 
 func (d *Dial) String() string {
@@ -121,10 +121,14 @@ func (d *Dial) String() string {
 			attr_buffer.WriteString(fmt.Sprintf(" recordLifetime=\"%d\"", d.attrs.RecordLifetime))
 		}
 
+		if len(d.attrs.RecordDirection) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" recordDirection=\"%t\"", d.attrs.RecordDirection))
+		}
+
 		attr_buffer.WriteString(fmt.Sprintf(" record=\"%t\"", d.attrs.Record))
 		attr_buffer.WriteString(fmt.Sprintf(" hideCallerId=\"%t\"", d.attrs.HideCallerId))
 		attr_buffer.WriteString(fmt.Sprintf(" straightToVm=\"%t\"", d.attrs.StraightToVm))
-		// attr_buffer.WriteString(fmt.Sprintf(" direction=\"%t\"", d.attrs.Direction))
+
 	}
 
 	return "<Dial" + attr_buffer.String() + ">" + d.addresser.String() + "</Dial>"
