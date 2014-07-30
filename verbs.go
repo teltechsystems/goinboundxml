@@ -122,7 +122,7 @@ func (d *Dial) String() string {
 		}
 
 		if len(d.attrs.RecordDirection) > 0 {
-			attr_buffer.WriteString(fmt.Sprintf(" recordDirection=\"%t\"", d.attrs.RecordDirection))
+			attr_buffer.WriteString(fmt.Sprintf(" recordDirection=\"%s\"", d.attrs.RecordDirection))
 		}
 
 		attr_buffer.WriteString(fmt.Sprintf(" record=\"%t\"", d.attrs.Record))
