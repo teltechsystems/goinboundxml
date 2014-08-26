@@ -310,6 +310,25 @@ func NewPlay(noun string, attrs *PlayAttrs) *Play {
 	}
 }
 
+type Pause struct {
+	timeout int
+}
+
+func (v *Pause) String() string {
+	attr_buffer := bytes.NewBuffer([]byte{})
+
+	if v.timeout >= 1 {
+		attr_buffer.WriteString(fmt.Sprintf(" length=\"%d\"", v.timeout))
+	}
+
+	return fmt.Sprintf("<Pause%s />", attr_buffer.String())
+}
+func NewPause(timeout int) *Pause {
+	return &Pause{
+		timeout: timeout,
+	}
+}
+
 // RECORD VERB
 type Record struct {
 	attrs *RecordAttrs

@@ -261,6 +261,20 @@ func TestPlay(t *testing.T) {
 	}
 }
 
+func TestPause(t *testing.T) {
+	var (
+		pause       *Pause
+		pauseString string
+	)
+
+	pause = NewPause(3)
+
+	if pauseString = pause.String(); pauseString != "<Pause length=\"3\" />" {
+		t.Errorf("pause string returned an unexpected value : %s", pauseString)
+	}
+
+}
+
 func TestRecord(t *testing.T) {
 	var (
 		record        *Record

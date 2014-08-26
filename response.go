@@ -20,6 +20,10 @@ func (r *Response) Hangup() {
 	r.verbs = append(r.verbs, NewHangup())
 }
 
+func (r *Response) Pause(timeout int) {
+	r.verbs = append(r.verbs, NewPause(timeout))
+}
+
 func (r *Response) Play(noun string, attrs *PlayAttrs) {
 	r.verbs = append(r.verbs, NewPlay(noun, attrs))
 }
