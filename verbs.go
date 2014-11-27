@@ -149,6 +149,7 @@ type Number struct {
 
 type NumberAttrs struct {
 	SendDigits string
+	sendOnPreanswer bool
 }
 
 func (n *Number) addresser() {}
@@ -160,6 +161,8 @@ func (n *Number) String() string {
 		if len(n.attrs.SendDigits) > 0 {
 			attr_buffer.WriteString(fmt.Sprintf(" sendDigits=\"%s\"", n.attrs.SendDigits))
 		}
+		
+		attr_buffer.WriteString(fmt.Sprintf(" sendOnPreanswer=\"%t\"", n.attrs.sendOnPreanswer))
 	}
 
 	return "<Number" + attr_buffer.String() + ">" + n.noun + "</Number>"
