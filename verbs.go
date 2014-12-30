@@ -3,6 +3,7 @@ package inboundxml
 import (
 	"bytes"
 	"fmt"
+	"strings"
 )
 
 type Verb interface {
@@ -381,6 +382,28 @@ func (v *Record) String() string {
 func NewRecord(attrs *RecordAttrs) *Record {
 	return &Record{
 		attrs: attrs,
+	}
+}
+
+type Ping struct {
+	noun   string
+	method string
+}
+
+func (p *Ping) String() string {
+	attr_buffer := bytes.NewBuffer([]byte{})
+
+	if strings.ToUpper(p.method) == "POST" || strings.ToUpper(p.method) == "GET" {
+		attr_buffer.WriteString(fmt.Sprintf(" method=\"%s\"", p.method))
+	}
+
+	return "<Ping" + attr_buffer.String() + ">" + p.noun + "</Ping>"
+}
+
+func NewPing(noun string, method string) *Ping {
+	return &Ping{
+		noun:   noun,
+		method: method,
 	}
 }
 

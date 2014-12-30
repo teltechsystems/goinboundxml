@@ -28,6 +28,10 @@ func (r *Response) Play(noun string, attrs *PlayAttrs) {
 	r.verbs = append(r.verbs, NewPlay(noun, attrs))
 }
 
+func (r *Response) Ping(noun string, method string) {
+	r.verbs = append(r.verbs, NewPing(noun, method))
+}
+
 func (r *Response) Record(attrs *RecordAttrs) {
 	r.verbs = append(r.verbs, NewRecord(attrs))
 }

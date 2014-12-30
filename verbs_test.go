@@ -137,7 +137,7 @@ func TestNumber(t *testing.T) {
 
 	number = NewNumber("+15558884341", &NumberAttrs{SendDigits: "1234"})
 
-	if number_string := number.String(); number_string != "<Number sendDigits=\"1234\">+15558884341</Number>" {
+	if number_string := number.String(); number_string != "<Number sendDigits=\"1234\" sendOnPreanswer=\"false\">+15558884341</Number>" {
 		t.Errorf("Number string returned an unexpected value : %s", number_string)
 	}
 }
@@ -271,6 +271,26 @@ func TestPause(t *testing.T) {
 
 	if pauseString = pause.String(); pauseString != "<Pause length=\"3\" />" {
 		t.Errorf("pause string returned an unexpected value : %s", pauseString)
+	}
+
+}
+
+func TestPing(t *testing.T) {
+	var (
+		ping       *Ping
+		pingString string
+	)
+
+	ping = NewPing("www.google.com", "POST")
+
+	if pingString = ping.String(); pingString != "<Ping method=\"POST\">www.google.com</Ping>" {
+		t.Errorf("ping string returned an unexpected value : %s", pingString)
+	}
+
+	ping = NewPing("www.google.com", "")
+
+	if pingString = ping.String(); pingString != "<Ping>www.google.com</Ping>" {
+		t.Errorf("ping string returned an unexpected value : %s", pingString)
 	}
 
 }
