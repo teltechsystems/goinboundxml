@@ -46,6 +46,10 @@ type DialAttrs struct {
 	IfMachineMethod   string
 }
 
+func (d *DialAttrs) getCallbackUrl() string {
+	return d.CallbackUrl
+}
+
 func (d *Dial) String() string {
 	attr_buffer := bytes.NewBuffer([]byte{})
 
@@ -171,6 +175,89 @@ func (n *Number) String() string {
 
 func NewNumber(noun string, attrs *NumberAttrs) *Number {
 	return &Number{
+		noun:  noun,
+		attrs: attrs,
+	}
+}
+
+// NUMBER VERB
+type Conference struct {
+	noun  string
+	attrs *ConferenceAttrs
+}
+
+type ConferenceAttrs struct {
+	Muted                  bool
+	Beep                   bool
+	StartConferenceOnEnter bool
+	EndConferenceOnExit    bool
+	MaxParticipants        int //1to 40
+	WaitUrl                string
+	WaitMethod             string //POST OR GET
+	HangupOnStar           bool
+	CallbackUrl            string
+	CallbackMethod         string
+	WaitSound              string
+	WaitSoundMethod        string //POST OR GET\
+	DigitsMatch            string //if the user inputs didgits and then match then send a callback
+	StayAlone              bool   //if they can stay alone in the conference
+	Record                 bool
+	RecordCallbackUrl      string
+	RecordFileFormat       string //mp3 or wav
+}
+
+func (c *Conference) addresser() {}
+
+func (c *Conference) String() string {
+	attr_buffer := bytes.NewBuffer([]byte{})
+
+	if c.attrs != nil {
+		if len(c.attrs.WaitUrl) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" waitUrl=\"%s\"", c.attrs.WaitUrl))
+		}
+		if len(c.attrs.WaitMethod) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" waitMethod=\"%s\"", c.attrs.WaitMethod))
+		}
+		if len(c.attrs.CallbackUrl) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" callbackUrl=\"%s\"", c.attrs.CallbackUrl))
+		}
+		if len(c.attrs.CallbackMethod) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" callbackMethod=\"%s\"", c.attrs.CallbackMethod))
+		}
+		if len(c.attrs.WaitSound) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" waitSound=\"%s\"", c.attrs.WaitSound))
+		}
+		if len(c.attrs.WaitSoundMethod) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" waitSoundMethod=\"%s\"", c.attrs.WaitSoundMethod))
+		}
+		if len(c.attrs.DigitsMatch) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" digitsMatch=\"%s\"", c.attrs.DigitsMatch))
+		}
+		if len(c.attrs.RecordCallbackUrl) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" recordCallbackUrl=\"%s\"", c.attrs.RecordCallbackUrl))
+		}
+		if len(c.attrs.RecordFileFormat) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" recordFileFormat=\"%s\"", c.attrs.RecordFileFormat))
+		}
+		if c.attrs.MaxParticipants > 0 && c.attrs.MaxParticipants < 41 {
+			attr_buffer.WriteString(fmt.Sprintf(" maxParticipants=\"%s\"", c.attrs.MaxParticipants))
+		}
+
+		attr_buffer.WriteString(fmt.Sprintf(" muted=\"%t\"", c.attrs.Muted))
+		attr_buffer.WriteString(fmt.Sprintf(" beep=\"%t\"", c.attrs.Beep))
+		attr_buffer.WriteString(fmt.Sprintf(" startConferenceOnEnter=\"%t\"", c.attrs.StartConferenceOnEnter))
+		attr_buffer.WriteString(fmt.Sprintf(" endConferenceOnExit=\"%t\"", c.attrs.EndConferenceOnExit))
+		attr_buffer.WriteString(fmt.Sprintf(" hangupOnStar=\"%t\"", c.attrs.HangupOnStar))
+		attr_buffer.WriteString(fmt.Sprintf(" stayAlone=\"%t\"", c.attrs.StayAlone))
+		attr_buffer.WriteString(fmt.Sprintf(" record=\"%t\"", c.attrs.Record))
+
+	}
+
+	return "<Conference" + attr_buffer.String() + ">" + c.noun + "</Conference>"
+}
+
+func NewConference(noun string, attrs *ConferenceAttrs) *Conference {
+	return &Conference{
 		noun:  noun,
 		attrs: attrs,
 	}
