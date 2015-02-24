@@ -433,6 +433,7 @@ type RecordAttrs struct {
 	Timeout     int
 	Method      string
 	PlayBeep    bool
+	FileFormat  string
 }
 
 func (v *Record) String() string {
@@ -457,6 +458,10 @@ func (v *Record) String() string {
 
 		if len(v.attrs.Direction) > 0 {
 			attr_buffer.WriteString(fmt.Sprintf(" direction=\"%s\"", v.attrs.Direction))
+		}
+
+		if len(v.attrs.FileFormat) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" fileFormat=\"%s\"", v.attrs.FileFormat))
 		}
 
 		attr_buffer.WriteString(fmt.Sprintf(" playBeep=\"%t\"", v.attrs.PlayBeep))
