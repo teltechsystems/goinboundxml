@@ -31,6 +31,7 @@ type DialAttrs struct {
 	Timeout           int
 	TimeLimit         int
 	CallerId          string
+	CallerName        string
 	HideCallerId      bool
 	DialMusic         string
 	CallbackUrl       string
@@ -72,6 +73,10 @@ func (d *Dial) String() string {
 
 		if len(d.attrs.CallerId) > 0 {
 			attr_buffer.WriteString(fmt.Sprintf(" callerId=\"%s\"", d.attrs.CallerId))
+		}
+
+		if len(d.attrs.CallerName) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" callerName=\"%s\"", d.attrs.CallerName))
 		}
 
 		if len(d.attrs.DialMusic) > 0 {
