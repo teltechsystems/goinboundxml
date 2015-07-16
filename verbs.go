@@ -440,6 +440,7 @@ type RecordAttrs struct {
 	Method      string
 	PlayBeep    bool
 	FileFormat  string
+	TrimSilence bool
 }
 
 func (v *Record) String() string {
@@ -476,6 +477,7 @@ func (v *Record) String() string {
 
 		attr_buffer.WriteString(fmt.Sprintf(" playBeep=\"%t\"", v.attrs.PlayBeep))
 		attr_buffer.WriteString(fmt.Sprintf(" background=\"%t\"", v.attrs.Background))
+		attr_buffer.WriteString(fmt.Sprintf(" trimSilence=\"%t\"", v.attrs.TrimSilence))
 	}
 
 	return fmt.Sprintf("<Record%s />", attr_buffer.String())
