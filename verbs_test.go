@@ -346,6 +346,16 @@ func TestRecord(t *testing.T) {
 
 	record = NewRecord(&RecordAttrs{
 		Action:    "http://www.example.com/recording-callback",
+		Method:    "POST",
+		MaxLength: 60,
+	})
+
+	if record_string = record.String(); record_string != "<Record action=\"http://www.example.com/recording-callback\" method=\"POST\" maxLength=\"60\" playBeep=\"false\" background=\"false\" />" {
+		t.Errorf("Record string returned an unexpected value : %s", record_string)
+	}
+
+	record = NewRecord(&RecordAttrs{
+		Action:    "http://www.example.com/recording-callback",
 		Direction: "in",
 		PlayBeep:  true,
 	})

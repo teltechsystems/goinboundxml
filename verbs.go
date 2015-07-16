@@ -436,6 +436,7 @@ type RecordAttrs struct {
 	Direction   string
 	FinishOnKey string
 	Timeout     int
+	MaxLength   int
 	Method      string
 	PlayBeep    bool
 	FileFormat  string
@@ -459,6 +460,10 @@ func (v *Record) String() string {
 
 		if v.attrs.Timeout > 0 {
 			attr_buffer.WriteString(fmt.Sprintf(" timeout=\"%d\"", v.attrs.Timeout))
+		}
+
+		if v.attrs.MaxLength > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" maxLength=\"%d\"", v.attrs.MaxLength))
 		}
 
 		if len(v.attrs.Direction) > 0 {
