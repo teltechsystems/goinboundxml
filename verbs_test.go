@@ -18,6 +18,12 @@ func TestDial(t *testing.T) {
 		So(dial.String(), ShouldEqual, "<Dial action=\"/testing\" record=\"false\" hideCallerId=\"false\" straightToVm=\"false\"><Number>+15038884341</Number></Dial>")
 	})
 
+	Convey("A dial verb with an action attr", t, func() {
+		dial := NewDial(NewSip("+15038884341", nil), &DialAttrs{Action: "/testing"})
+
+		So(dial.String(), ShouldEqual, "<Dial action=\"/testing\" record=\"false\" hideCallerId=\"false\" straightToVm=\"false\"><Sip>+15038884341</Sip></Dial>")
+	})
+
 	Convey("A dial verb with a method attr", t, func() {
 		dial := NewDial(NewNumber("+15038884341", nil), &DialAttrs{Method: "POST"})
 
@@ -139,6 +145,20 @@ func TestNumber(t *testing.T) {
 
 	if number_string := number.String(); number_string != "<Number sendDigits=\"1234\" sendOnPreanswer=\"false\">+15558884341</Number>" {
 		t.Errorf("Number string returned an unexpected value : %s", number_string)
+	}
+}
+
+func TestSip(t *testing.T) {
+	sip := NewSip("+15558884341", nil)
+
+	if sip_string := sip.String(); sip_string != "<Sip>+15558884341</Sip>" {
+		t.Errorf("Sip string returned an unexpected value : %s", sip_string)
+	}
+
+	sip = NewSip("+15558884341", &SipAttrs{Username: "user", Password: "pass"})
+
+	if sip_string := sip.String(); sip_string != "<Sip username=\"user\" password=\"pass\">+15558884341</Sip>" {
+		t.Errorf("Sip string returned an unexpected value : %s", sip_string)
 	}
 }
 

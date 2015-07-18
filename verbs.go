@@ -185,7 +185,43 @@ func NewNumber(noun string, attrs *NumberAttrs) *Number {
 	}
 }
 
-// NUMBER VERB
+// SIP VERB
+type Sip struct {
+	noun  string
+	attrs *SipAttrs
+}
+
+type SipAttrs struct {
+	Username string
+	Password string
+}
+
+func (s *Sip) addresser() {}
+
+func (s *Sip) String() string {
+	attr_buffer := bytes.NewBuffer([]byte{})
+
+	if s.attrs != nil {
+		if len(s.attrs.Username) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" username=\"%s\"", s.attrs.Username))
+		}
+
+		if len(s.attrs.Password) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" password=\"%s\"", s.attrs.Password))
+		}
+	}
+
+	return "<Sip" + attr_buffer.String() + ">" + s.noun + "</Sip>"
+}
+
+func NewSip(noun string, attrs *SipAttrs) *Sip {
+	return &Sip{
+		noun:  noun,
+		attrs: attrs,
+	}
+}
+
+// CONFERENCE VERB
 type Conference struct {
 	noun  string
 	attrs *ConferenceAttrs
@@ -268,7 +304,7 @@ func NewConference(noun string, attrs *ConferenceAttrs) *Conference {
 	}
 }
 
-// DIAL VERB
+// GATHER VERB
 type Gather struct {
 	InnerVerb Verb
 	attrs     *GatherAttrs
