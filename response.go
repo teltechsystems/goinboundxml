@@ -8,7 +8,11 @@ type Response struct {
 	verbs []Verb
 }
 
-func (r *Response) Dial(addresser dialAddresser, attrs *DialAttrs) {
+func (r *Response) Add(verb Verb) {
+	r.verbs = append(r.verbs, verb)
+}
+
+func (r *Response) Dial(addresser DialAddresser, attrs *DialAttrs) {
 	r.verbs = append(r.verbs, NewDial(addresser, attrs))
 }
 

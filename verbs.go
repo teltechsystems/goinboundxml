@@ -10,14 +10,14 @@ type Verb interface {
 	fmt.Stringer
 }
 
-type dialAddresser interface {
+type DialAddresser interface {
 	Verb
-	addresser()
+	Addresser()
 }
 
 // DIAL VERB
 type Dial struct {
-	addresser dialAddresser
+	Addresser DialAddresser
 	attrs     *DialAttrs
 }
 
@@ -141,12 +141,12 @@ func (d *Dial) String() string {
 
 	}
 
-	return "<Dial" + attr_buffer.String() + ">" + d.addresser.String() + "</Dial>"
+	return "<Dial" + attr_buffer.String() + ">" + d.Addresser.String() + "</Dial>"
 }
 
-func NewDial(addresser dialAddresser, attrs *DialAttrs) *Dial {
+func NewDial(addresser DialAddresser, attrs *DialAttrs) *Dial {
 	return &Dial{
-		addresser: addresser,
+		Addresser: addresser,
 		attrs:     attrs,
 	}
 }
@@ -162,7 +162,7 @@ type NumberAttrs struct {
 	SendOnPreanswer bool
 }
 
-func (n *Number) addresser() {}
+func (n *Number) Addresser() {}
 
 func (n *Number) String() string {
 	attr_buffer := bytes.NewBuffer([]byte{})
@@ -196,7 +196,7 @@ type SipAttrs struct {
 	Password string
 }
 
-func (s *Sip) addresser() {}
+func (s *Sip) Addresser() {}
 
 func (s *Sip) String() string {
 	attr_buffer := bytes.NewBuffer([]byte{})
@@ -247,7 +247,7 @@ type ConferenceAttrs struct {
 	RecordFileFormat       string //mp3 or wav
 }
 
-func (c *Conference) addresser() {}
+func (c *Conference) Addresser() {}
 
 func (c *Conference) String() string {
 	attr_buffer := bytes.NewBuffer([]byte{})
