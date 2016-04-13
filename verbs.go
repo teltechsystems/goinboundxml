@@ -28,6 +28,7 @@ type DialAttrs struct {
 	RecordCallbackUrl string
 	RecordLifetime    int
 	RecordDirection   string
+	RecordFileFormat  string
 	Timeout           int
 	TimeLimit         int
 	CallerId          string
@@ -133,6 +134,10 @@ func (d *Dial) String() string {
 
 		if len(d.attrs.RecordDirection) > 0 {
 			attr_buffer.WriteString(fmt.Sprintf(" recordDirection=\"%s\"", d.attrs.RecordDirection))
+		}
+
+		if len(d.attrs.RecordFileFormat) > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" recordFormat=\"%s\"", d.attrs.RecordFileFormat))
 		}
 
 		attr_buffer.WriteString(fmt.Sprintf(" record=\"%t\"", d.attrs.Record))
