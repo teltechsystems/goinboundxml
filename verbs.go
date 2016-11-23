@@ -466,6 +466,29 @@ func NewPause(timeout int) *Pause {
 	}
 }
 
+// GATHER VERB
+type PreAnswer struct {
+	InnerVerbs []Verb
+}
+
+func (pa *PreAnswer) String() string {
+	preAnswerBuffer := bytes.NewBuffer([]byte{})
+
+	preAnswerBuffer.WriteString("<PreAnswer>")
+	for _, verb := range pa.InnerVerbs {
+		preAnswerBuffer.WriteString(verb.String())
+	}
+	preAnswerBuffer.WriteString("</PreAnswer>")
+
+	return preAnswerBuffer.String()
+}
+
+func NewPreAnswer(innerVerbs ...Verb) *PreAnswer {
+	return &PreAnswer{
+		InnerVerbs: innerVerbs,
+	}
+}
+
 // RECORD VERB
 type Record struct {
 	attrs *RecordAttrs

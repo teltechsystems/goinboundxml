@@ -36,6 +36,10 @@ func (r *Response) Ping(noun string, method string) {
 	r.verbs = append(r.verbs, NewPing(noun, method))
 }
 
+func (r *Response) PreAnswer(innerVerbs ...Verb) {
+	r.verbs = append(r.verbs, NewPreAnswer(innerVerbs...))
+}
+
 func (r *Response) Record(attrs *RecordAttrs) {
 	r.verbs = append(r.verbs, NewRecord(attrs))
 }
