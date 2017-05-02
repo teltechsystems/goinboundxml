@@ -286,7 +286,7 @@ func (c *Conference) String() string {
 			attr_buffer.WriteString(fmt.Sprintf(" recordFileFormat=\"%s\"", c.attrs.RecordFileFormat))
 		}
 		if c.attrs.MaxParticipants > 0 && c.attrs.MaxParticipants < 41 {
-			attr_buffer.WriteString(fmt.Sprintf(" maxParticipants=\"%s\"", c.attrs.MaxParticipants))
+			attr_buffer.WriteString(fmt.Sprintf(" maxParticipants=\"%d\"", c.attrs.MaxParticipants))
 		}
 
 		attr_buffer.WriteString(fmt.Sprintf(" muted=\"%t\"", c.attrs.Muted))
