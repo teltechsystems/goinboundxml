@@ -279,10 +279,12 @@ func (c *Conference) String() string {
 
 	if c.attrs != nil {
 		if len(c.attrs.WaitUrl) > 0 {
-			attr_buffer.WriteString(fmt.Sprintf(" waitUrl=\"%s\"", c.attrs.WaitUrl))
+			// The param is inconsistent with attribute due to an update on Zang
+			attr_buffer.WriteString(fmt.Sprintf(" waitSound=\"%s\"", c.attrs.WaitUrl))
 		}
 		if len(c.attrs.WaitMethod) > 0 {
-			attr_buffer.WriteString(fmt.Sprintf(" waitMethod=\"%s\"", c.attrs.WaitMethod))
+			// The param is inconsistent with attribute due to an update on Zang
+			attr_buffer.WriteString(fmt.Sprintf(" waitSoundMethod=\"%s\"", c.attrs.WaitMethod))
 		}
 		if len(c.attrs.CallbackUrl) > 0 {
 			attr_buffer.WriteString(fmt.Sprintf(" callbackUrl=\"%s\"", c.attrs.CallbackUrl))
