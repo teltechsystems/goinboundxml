@@ -156,6 +156,26 @@ func NewDial(addresser DialAddresser, attrs *DialAttrs) *Dial {
 	}
 }
 
+// MULTI VERB
+type MultiVerb struct {
+	verbs []Verb
+}
+
+func (v *MultiVerb) String() string {
+	b := bytes.NewBuffer([]byte{})
+	for i := range v.verbs {
+		b.WriteString(v.verbs[i].String())
+	}
+
+	return b.String()
+}
+
+func NewMultiVerb(verbs ...Verb) *MultiVerb {
+	return &MultiVerb{
+		verbs: verbs,
+	}
+}
+
 // NUMBER VERB
 type Number struct {
 	noun  string
