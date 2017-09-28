@@ -25,7 +25,7 @@ type DialAttrs struct {
 	Action            string
 	Method            string
 	Record            bool
-	recordTrimSilence bool
+	RecordTrimSilence bool
 	RecordCallbackUrl string
 	RecordLifetime    int
 	RecordDirection   string
@@ -142,7 +142,7 @@ func (d *Dial) String() string {
 		}
 
 		attr_buffer.WriteString(fmt.Sprintf(" record=\"%t\"", d.attrs.Record))
-		attr_buffer.WriteString(fmt.Sprintf(" recordTrimSilence=\"%t\"", d.attrs.recordTrimSilence))
+		attr_buffer.WriteString(fmt.Sprintf(" recordTrimSilence=\"%t\"", d.attrs.RecordTrimSilence))
 		attr_buffer.WriteString(fmt.Sprintf(" hideCallerId=\"%t\"", d.attrs.HideCallerId))
 		attr_buffer.WriteString(fmt.Sprintf(" straightToVm=\"%t\"", d.attrs.StraightToVm))
 
