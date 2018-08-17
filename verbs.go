@@ -412,8 +412,10 @@ func (v *Hangup) String() string {
 	return "<Hangup" + attr_buffer.String() + " />"
 }
 
-func NewHangup() *Hangup {
-	return &Hangup{}
+func NewHangup(attrs *HangupAttrs) *Hangup {
+	return &Hangup{
+		attrs: attrs,
+	}
 }
 
 // REJECT VERB

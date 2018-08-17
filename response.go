@@ -20,8 +20,8 @@ func (r *Response) Gather(innerVerb Verb, attrs *GatherAttrs) {
 	r.verbs = append(r.verbs, NewGather(innerVerb, attrs))
 }
 
-func (r *Response) Hangup() {
-	r.verbs = append(r.verbs, NewHangup())
+func (r *Response) Hangup(attrs *HangupAttrs) {
+	r.verbs = append(r.verbs, NewHangup(attrs))
 }
 
 func (r *Response) Pause(timeout int) {
