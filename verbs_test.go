@@ -1,8 +1,9 @@
 package inboundxml
 
 import (
-	. "github.com/smartystreets/goconvey/convey"
 	"testing"
+
+	. "github.com/smartystreets/goconvey/convey"
 )
 
 func TestDial(t *testing.T) {
@@ -215,11 +216,25 @@ func TestGather(t *testing.T) {
 }
 
 func TestHangup(t *testing.T) {
-	hangup := NewHangup()
+	Convey("A hangup verb with with no attrs ", t, func() {
+		hangup := NewHangup(&HangupAttrs{})
+		So(hangup.String(), ShouldEqual, "<Hangup />")
+	})
 
-	if hangup_string := hangup.String(); hangup_string != "<Hangup />" {
-		t.Errorf("Hangup string returned an unexpected value : %s", hangup_string)
-	}
+	Convey("A hangup verb with a reason attr", t, func() {
+		hangup := NewHangup(&HangupAttrs{Reason: "rejected"})
+		So(hangup.String(), ShouldEqual, "<Hangup reason=\"rejected\" />")
+	})
+
+	Convey("A hangup verb with a schedule attr", t, func() {
+		hangup := NewHangup(&HangupAttrs{Schedule: 60})
+		So(hangup.String(), ShouldEqual, "<Hangup schedule=\"60\" />")
+	})
+
+	Convey("A hangup verb with a schedule and reason attr", t, func() {
+		hangup := NewHangup(&HangupAttrs{Schedule: 60, Reason: "rejected"})
+		So(hangup.String(), ShouldEqual, "<Hangup schedule=\"60\" reason=\"rejected\" />")
+	})
 }
 
 func TestSay(t *testing.T) {

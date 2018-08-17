@@ -387,14 +387,35 @@ func NewGather(innerVerb Verb, attrs *GatherAttrs) *Gather {
 }
 
 // HANGUP VERB
-type Hangup struct{}
-
-func (v *Hangup) String() string {
-	return "<Hangup />"
+type Hangup struct {
+	attrs *HangupAttrs
 }
 
-func NewHangup() *Hangup {
-	return &Hangup{}
+type HangupAttrs struct {
+	Schedule int
+	Reason   string
+}
+
+func (v *Hangup) String() string {
+	attr_buffer := bytes.NewBuffer([]byte{})
+
+	if v.attrs != nil {
+		if v.attrs.Schedule > 0 {
+			attr_buffer.WriteString(fmt.Sprintf(" schedule=\"%d\"", v.attrs.Schedule))
+		}
+
+		if v.attrs.Reason != "" {
+			attr_buffer.WriteString(fmt.Sprintf(" reason=\"%s\"", v.attrs.Reason))
+		}
+	}
+
+	return "<Hangup" + attr_buffer.String() + " />"
+}
+
+func NewHangup(attrs *HangupAttrs) *Hangup {
+	return &Hangup{
+		attrs: attrs,
+	}
 }
 
 // REJECT VERB
