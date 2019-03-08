@@ -294,6 +294,14 @@ func TestPlay(t *testing.T) {
 	if play_string = play.String(); play_string != "<Play loop=\"1\">http://www.example.com/audio.mp3</Play>" {
 		t.Errorf("Play string returned an unexpected value : %s", play_string)
 	}
+
+	play = NewPlay("http://www.example.com/audio.mp3", &PlayAttrs{
+		Digits: "w123#",
+	})
+
+	if play_string = play.String(); play_string != "<Play digits=\"w123#\">http://www.example.com/audio.mp3</Play>" {
+		t.Errorf("Play string returned an unexpected value : %s", play_string)
+	}
 }
 
 func TestPause(t *testing.T) {

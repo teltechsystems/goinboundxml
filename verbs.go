@@ -470,7 +470,8 @@ type Play struct {
 }
 
 type PlayAttrs struct {
-	Loop int
+	Loop   int
+	Digits string
 }
 
 func (v *Play) String() string {
@@ -479,6 +480,10 @@ func (v *Play) String() string {
 	if v.attrs != nil {
 		if v.attrs.Loop >= 1 {
 			attr_buffer.WriteString(fmt.Sprintf(" loop=\"%d\"", v.attrs.Loop))
+		}
+
+		if v.attrs.Digits != "" {
+			attr_buffer.WriteString(fmt.Sprintf(" digits=\"%s\"", v.attrs.Digits))
 		}
 	}
 
