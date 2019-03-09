@@ -304,6 +304,19 @@ func TestPlay(t *testing.T) {
 	}
 }
 
+func TestDTMF(t *testing.T) {
+	var (
+		DTMF        *DTMF
+		DTMFstr string
+	)
+
+	DTMF = NewDTMF("w9174807478#")
+
+	if DTMFstr = DTMF.String(); DTMFstr != "<DTMF>w9174807478#</DTMF>" {
+		t.Errorf("Play string returned an unexpected value : %s", DTMFstr)
+	}
+}
+
 func TestPause(t *testing.T) {
 	var (
 		pause       *Pause

@@ -497,6 +497,23 @@ func NewPlay(noun string, attrs *PlayAttrs) *Play {
 	}
 }
 
+// DTMF VERB
+type DTMF struct {
+	tones string
+}
+
+func (v *DTMF) String() string {
+	attrBuffer := bytes.NewBuffer([]byte{})
+
+	return fmt.Sprintf("<DTMF%s>%s</DTMF>", attrBuffer.String(), v.tones)
+}
+
+func NewDTMF(tones string) *DTMF {
+	return &DTMF{
+		tones:  tones,
+	}
+}
+
 type Pause struct {
 	timeout int
 }
